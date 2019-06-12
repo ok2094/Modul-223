@@ -12,8 +12,8 @@
 			<h:panelGrid columns="2">
 				<h:outputText value="* #{bundle.personName}" />
 				<p:inputText value="#{personBean.person.name}" required="true" label="#{bundle.personName}" />
-				<h:outputText value="Surname" />			
-				<p:inputText value="#{personBean.person.surname}" required="true" label="#{bundle.personName}" />
+				<h:outputText value="* #{bundle.personSurname}" />			
+				<p:inputText value="#{personBean.person.surname}" required="true" label="#{bundle.personSurname}" />
 		
 				<p:commandButton value="#{bundle.update}" icon="pi pi-save"
 					action="#{personBean.updatePerson()}"

@@ -21,6 +21,15 @@ public class Person implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
+	private String surname;
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
 
 	@ManyToMany
 	private List<Language> languages;

@@ -6,8 +6,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import ch.gibm.dao.EntityManagerHelper;
+import ch.gibm.dao.CityDAO;
 import ch.gibm.dao.LanguageDAO;
 import ch.gibm.dao.PersonDAO;
+import ch.gibm.entity.City;
 import ch.gibm.entity.Language;
 import ch.gibm.entity.Person;
 
@@ -15,6 +17,7 @@ public class PersonFacade implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private PersonDAO personDAO = new PersonDAO();
+	private CityDAO cityDAO = new CityDAO();
 	private LanguageDAO languageDAO = new LanguageDAO();
 
 	public void createPerson(Person person) {
@@ -51,6 +54,31 @@ public class PersonFacade implements Serializable {
 		EntityManagerHelper.commitAndCloseTransaction();
 
 		return result;
+	}
+	
+	public Person findPersonWithAllCities(int personId) {
+		EntityManagerHelper.beginTransaction();
+		Person person = personDAO.findPersonWithAllCities(personId);
+		EntityManagerHelper.commitAndCloseTransaction();
+		return person;
+	}
+
+	public void addCityToPerson(int cityId, int personId) {
+		EntityManagerHelper.beginTransaction();
+		City city = cityDAO.find(cityId);
+		Person person = personDAO.find(personId);
+		person.getCities().add(city);
+		city.getPersons().add(person);
+		EntityManagerHelper.commitAndCloseTransaction();
+	}
+
+	public void removeCityFromPerson(int cityId, int personId) {
+		EntityManagerHelper.beginTransaction();
+		City city = cityDAO.find(cityId);
+		Person person = personDAO.find(personId);
+		person.getCities().remove(city);
+		city.getPersons().remove(person);
+		EntityManagerHelper.commitAndCloseTransaction();
 	}
 
 	public Person findPersonWithAllLanguages(int personId) {

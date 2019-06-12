@@ -11,6 +11,14 @@
 				<h:outputText value="#{bundle.personSurname}" />
 				<h:outputText value="#{personBean.personWithLanguagesForDetail.surname}" />
 			</h:panelGrid>
+			<br />
+ 			<p:orderList value="#{personBean.personWithLanguagesForDetail.cities}" var="city" itemValue="#{city}" 
+ 				controlsLocation="none" responsive="true" styleClass="langlist">
+        		<f:facet name="caption">#{bundle.cityPlural}</f:facet>
+         		<p:column>
+	          		<h:outputText value="#{city.name}" />
+    	    	</p:column>
+    		</p:orderList>
  			<br />
  			<p:orderList value="#{personBean.personWithLanguagesForDetail.languages}" var="language" itemValue="#{language}" 
  				controlsLocation="none" responsive="true" styleClass="langlist">

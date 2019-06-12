@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="/pages/public/templates/master.xhtml">
+		<ui:define name="divMain">
+			<h:form id="citiesForm">
+				<p:dataTable id="citiesTable" value="#{cityBean.allCities}" var="city" emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle.cityName}" />
+						</f:facet>
+
+						<h:outputText value="#{city.name}" />
+					</p:column>
+
+					<p:column>
+						<p:commandButton icon="pi pi-info" onclick="PF('cityDetailDialogWidget').show()" update=":cityDetailDialogForm" >
+							<f:setPropertyActionListener target="#{cityBean.city}" value="#{city}" />
+						</p:commandButton> 
+						<p:spacer width="10px" />
+						<p:commandButton icon="pi pi-pencil" update=":cityUpdateDialogForm" onclick="PF('cityUpdateDialogWidget').show()" >
+							<f:setPropertyActionListener target="#{cityBean.city}" value="#{city}" />
+						</p:commandButton>
+						<p:spacer width="10px" />
+						<p:commandButton icon="pi pi-trash" update=":cityDeleteDialogForm" onclick="PF('cityDeleteDialogWidget').show()" >
+							<f:setPropertyActionListener target="#{cityBean.city}" value="#{city}" />
+						</p:commandButton>
+					</p:column>
+
+				</p:dataTable>
+				<p:commandButton value="#{bundle.create} #{bundle.city}" icon="pi pi-plus" update=":cityCreateDialogForm"
+					actionListener="#{cityBean.resetCity()}" onclick="PF('cityCreateDialogWidget').show()" />
+			</h:form>
+
+			<ui:include src="/pages/public/city/dialogs/cityCreateDialog.xhtml" />
+			<ui:include src="/pages/public/city/dialogs/cityDetailDialog.xhtml" />
+			<ui:include src="/pages/public/city/dialogs/cityUpdateDialog.xhtml" />
+			<ui:include src="/pages/public/city/dialogs/cityDeleteDialog.xhtml" />
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

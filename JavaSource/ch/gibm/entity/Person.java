@@ -8,13 +8,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name = "Person.findPersonByIdWithLanguages", query = "select p from Person p left join fetch p.languages where p.id = :personId")
+@NamedQueries({
+	@NamedQuery(name = "Person.findPersonByIdWithCities", query = "select p from Person p left join fetch p.cities where p.id = :personId"),
+	@NamedQuery(name = "Person.findPersonByIdWithLanguages", query = "select p from Person p left join fetch p.languages where p.id = :personId"),
+}) 
 public class Person implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	public static final String FIND_PERSON_BY_ID_WITH_CITIES = "Person.findPersonByIdWithCities";
 	public static final String FIND_PERSON_BY_ID_WITH_LANGUAGES = "Person.findPersonByIdWithLanguages";
 	
 	@Id
@@ -22,6 +28,9 @@ public class Person implements Serializable {
 	private int id;
 	private String name;
 	private String surname;
+	
+	@ManyToOne
+	private List<City> cities;
 
 	@ManyToMany
 	private List<Language> languages;
@@ -50,6 +59,14 @@ public class Person implements Serializable {
 		this.surname = surname;
 	}
 
+	public List<City> getCities() {
+		return cities;
+	}
+
+	public void setCities(List<City> cities) {
+		this.cities = cities;
+	}
+	
 	public List<Language> getLanguages() {
 		return languages;
 	}

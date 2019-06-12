@@ -29,6 +29,11 @@
 							<f:setPropertyActionListener target="#{personBean.person}" value="#{person}" />
 						</p:commandButton>
 						<p:spacer width="10px" />
+						<p:commandButton value="#{bundle.cityPlural}" icon="pi pi-pencil" ajax="false"
+							action="#{personBean.editPersonCities()}">
+								<f:setPropertyActionListener target="#{personBean.person}" value="#{person}" />
+						</p:commandButton>
+						<p:spacer width="10px" />
 						<p:commandButton value="#{bundle.languagePlural}" icon="pi pi-pencil" ajax="false"
 							action="#{personBean.editPersonLanguages()}">
 								<f:setPropertyActionListener target="#{personBean.person}" value="#{person}" />

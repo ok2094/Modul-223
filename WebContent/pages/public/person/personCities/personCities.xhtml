@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="/pages/public/templates/master.xhtml">
+		<ui:define name="divMain">
+			<h3>#{bundle.personCities}: <h:outputText value="#{personBean.personWithLanguages.name}" /></h3> 
+			<h:form id="personsForm">
+				<p:autoComplete id="cityDropDown" value="#{personBean.city}" label="#{bundle.city}" required="true" var="city"
+					itemLabel="#{city.name}" itemValue="#{city}" completeMethod="#{personBean.getRemainingCities}" dropdown="true" />
+				<br />
+				<p:commandButton value="#{bundle.remove}" icon="pi pi-trash" actionListener="#{personBean.resetCity}" onclick="PF('personRemoveCityDialogWidget').show()" update=":personRemoveCityDialogForm" >
+					<f:setPropertyActionListener target="#{personBean.city}" value="#{city}" />
+				</p:commandButton>
+				<p:commandButton value="#{bundle.save}" action="#{personBean.setCityToPerson()}" />
+			</h:form>
+			<ui:include src="/pages/public/person/personCities/dialogs/personRemoveCityDialog.xhtml" />
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

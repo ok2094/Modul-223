@@ -6,12 +6,17 @@
 		draggable="false" resizable="false">
 		<h:form id="personDetailDialogForm" prependId="false">
 			<h:panelGrid columns="2">
-				<h:outputText value="#{bundle.personName}" />
+				<h:outputText value="#{bundle.personName}: " />
 				<h:outputText value="#{personBean.personWithLanguagesForDetail.name}" />
-				<h:outputText value="#{bundle.personSurname}" />
+				<h:outputText value="#{bundle.personSurname}: " />
 				<h:outputText value="#{personBean.personWithLanguagesForDetail.surname}" />
 			</h:panelGrid>
  			<br />
+ 			<h:panelGrid columns="2">
+				<h:outputText value="#{bundle.city}: " />
+				<h:outputText value="#{personBean.personWithLanguagesForDetail.city.name}" />
+			</h:panelGrid>
+			<br />
  			<p:orderList value="#{personBean.personWithLanguagesForDetail.languages}" var="language" itemValue="#{language}" 
  				controlsLocation="none" responsive="true" styleClass="langlist">
         		<f:facet name="caption">#{bundle.languagePlural}</f:facet>

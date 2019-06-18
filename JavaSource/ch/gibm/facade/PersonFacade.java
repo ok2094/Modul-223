@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import ch.gibm.dao.CityDAO;
 import ch.gibm.dao.EntityManagerHelper;
 import ch.gibm.dao.LanguageDAO;
 import ch.gibm.dao.PersonDAO;
+import ch.gibm.entity.City;
 import ch.gibm.entity.Language;
 import ch.gibm.entity.Person;
 
@@ -16,6 +18,7 @@ public class PersonFacade implements Serializable {
 	
 	private PersonDAO personDAO = new PersonDAO();
 	private LanguageDAO languageDAO = new LanguageDAO();
+	private CityDAO cityDAO = new CityDAO();
 
 	public void createPerson(Person person) {
 		EntityManagerHelper.beginTransaction();
@@ -77,4 +80,19 @@ public class PersonFacade implements Serializable {
 		language.getPersons().remove(person);
 		EntityManagerHelper.commitAndCloseTransaction();
 	}
+	
+	public void setCityToPerson(int cityId, int personId) {
+		EntityManagerHelper.beginTransaction();
+		City city = cityDAO.find(cityId);
+		Person person = personDAO.find(personId);
+		person.setCity(city);
+		EntityManagerHelper.commitAndCloseTransaction();
+	}
+
+	public void removeCityFromPerson(int personId) {
+		EntityManagerHelper.beginTransaction();
+		Person person = personDAO.find(personId);
+		person.setCity(null);
+		EntityManagerHelper.commitAndCloseTransaction();
+}
 }

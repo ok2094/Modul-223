@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 
 import com.sun.faces.context.flash.ELFlash;
 
+import ch.gibm.entity.City;
 import ch.gibm.entity.Language;
 import ch.gibm.entity.Person;
 import ch.gibm.facade.PersonFacade;
@@ -25,10 +26,13 @@ public class PersonBean extends AbstractBean implements Serializable {
 	private Person person;
 	private Person personWithLanguages;
 	private Person personWithLanguagesForDetail;
+	private City city;
 
 	@ManagedProperty(value="#{languageBean}")
 	private LanguageBean languageBean;
 	
+	@ManagedProperty(value="#{cityBean}")
+	private CityBean cityBean;
 
 	private List<Person> persons;
 	private PersonFacade personFacade;
@@ -133,6 +137,39 @@ public class PersonBean extends AbstractBean implements Serializable {
 		ELFlash.getFlash().put(SELECTED_PERSON, person);
 		return "/pages/public/person/personLanguages/personLanguages.xhtml";
 	}
+	
+	public void setCityToPerson() {
+		try {
+			getPersonFacade().setCityToPerson(city.getId(), personWithLanguages.getId());
+			closeDialog();
+			displayInfoMessageToUser("Added with success");
+			reloadPersonWithLanguages();
+			resetCity();
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("A problem occurred while saving. Try again later");
+			e.printStackTrace();
+		}
+	}
+
+	public void removeCityFromPerson() {
+		try {
+			getPersonFacade().removeCityFromPerson(personWithLanguages.getId());
+			closeDialog();
+			displayInfoMessageToUser("Removed with success");
+			reloadPersonWithLanguages();
+			resetCity();
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("A problem occurred while removing. Try again later");
+			e.printStackTrace();
+		}
+	}
+
+	public String editPersonCity() {
+		ELFlash.getFlash().put(SELECTED_PERSON, person);
+		return "/pages/public/person/personCities/personCities.xhtml";
+	}
 
 	public PersonFacade getPersonFacade() {
 		if (personFacade == null) {
@@ -156,6 +193,10 @@ public class PersonBean extends AbstractBean implements Serializable {
 	
 	public void setLanguageBean(LanguageBean languageBean) {
 		this.languageBean = languageBean;
+	}
+	
+	public void setCityBean(CityBean cityBean) {
+		this.cityBean = cityBean;
 	}
 
 	public List<Person> getAllPersons() {
@@ -200,7 +241,40 @@ public class PersonBean extends AbstractBean implements Serializable {
 		language = new Language();
 	}
 
+	public City getCity() {
+		if (city == null) {
+			if(personWithLanguages.getCity() != null) {
+				city = personWithLanguages.getCity();
+			} else {
+				city = new City();
+			}
+		}
+
+		return city;
+	}
+	
+	public List<City> getRemainingCities(String name) {
+		//get all languages as copy
+		List<City> res = new ArrayList<City>(this.cityBean.getAllCities());
+		//remove when name not occurs
+		res.removeIf(l -> l.getName().toLowerCase().contains(name.toLowerCase()) == false);
+		return res;
+	}
+	
+	public List<City> getAllCities() {
+		return cityBean.getAllCities();
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+	public void resetCity() {
+		city = new City();
+	}
+
 	private void reloadPersonWithLanguages() {
 		personWithLanguages = getPersonFacade().findPersonWithAllLanguages(person.getId());
 	}
+
 }

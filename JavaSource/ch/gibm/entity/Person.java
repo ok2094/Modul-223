@@ -7,11 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name = "Person.findPersonByIdWithLanguages", query = "select p from Person p left join fetch p.languages where p.id = :personId")
+@NamedQuery(name = "Person.findPersonByIdWithLanguages", query = "select p from Person p left join fetch p.languages left join fetch p.city where p.id = :personId")
 public class Person implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -25,6 +27,10 @@ public class Person implements Serializable {
 
 	@ManyToMany
 	private List<Language> languages;
+	
+	@ManyToOne
+	@JoinColumn(name="cityID")
+	private City city;
 
 	public int getId() {
 		return id;
@@ -56,6 +62,14 @@ public class Person implements Serializable {
 
 	public void setLanguages(List<Language> languages) {
 		this.languages = languages;
+	}
+	
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
 	}
 
 	@Override

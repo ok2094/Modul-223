@@ -38,6 +38,15 @@ a:link, a:visited, a:hover, a:active {
 	bottom: 10px;
 }
 
+#divLogin {
+	width: 300px;
+	height: 300px;
+	display: flex; 
+	align-items: center;
+	background: #f4f4f4;
+	border: 1px solid darkGray;
+}
+
 #divTop {
 	padding: 0;
 	padding-left: 10px;
@@ -100,5 +109,5 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .ui-orderlist.langlist .ui-orderlist-list {
- 	height: 80px;
+	height: 80px;
 }

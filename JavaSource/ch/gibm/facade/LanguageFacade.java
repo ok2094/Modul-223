@@ -20,9 +20,7 @@ public class LanguageFacade implements Serializable{
 
 	public void updateLanguage(Language language) {
 		EntityManagerHelper.beginTransaction();
-		Language persistedLng = languageDAO.find(language.getId());
-		persistedLng.setName(language.getName());
-		languageDAO.update(persistedLng);
+		languageDAO.update(language);
 		EntityManagerHelper.commitAndCloseTransaction();
 	}
 	

@@ -19,9 +19,7 @@ public class CityFacade implements Serializable{
 
 	public void updateCity(City city) {
 		EntityManagerHelper.beginTransaction();
-		City persistedLng = cityDAO.find(city.getId());
-		persistedLng.setName(city.getName());
-		cityDAO.update(persistedLng);
+		cityDAO.update(city);
 		EntityManagerHelper.commitAndCloseTransaction();
 	}
 	

@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="/pages/protected/templates/basic.xhtml">
+		<ui:define name="divMain">
+			<h:form>
+				<h2>#{bundle.loginMessage}</h2>
+				<label for="user">Username: </label>
+				<h:inputText value="#{loginBean.user}" label="Username" id="user"
+					required="true" autocomplete="off" />
+				<br />
+				<label for="pwd">Password: </label>
+				<h:inputSecret value="#{loginBean.password}" label="Password"
+					id="pwd" required="true" autocomplete="off">
+					<f:validateLength minimum="4" />
+				</h:inputSecret>
+				<br />
+				<p:commandButton action="#{loginBean.login()}" value="Login"
+					ajax="false" />
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

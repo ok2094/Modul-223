@@ -3,7 +3,6 @@ package ch.gibm.facade;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.EntityManager;
 
 import ch.gibm.dao.CityDAO;
 import ch.gibm.dao.EntityManagerHelper;

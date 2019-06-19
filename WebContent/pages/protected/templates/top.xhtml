@@ -7,12 +7,16 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
 	<ui:composition>
-		<div id="topMessage" style="ui-panel">
+		<div id="topMessage" style="">
 			<h:form>
-				<h:commandLink action="/pages/public/index.xhtml?faces-redirect=true">
+				<h:commandLink
+					action="/pages/protected/index.xhtml?faces-redirect=true">
 					<h:graphicImage library="images" name="logo.png" />
 				</h:commandLink>
 			Welcome to JSF
+				<p:commandButton icon="pi pi-ban" rendered="true"
+					action="#{userBean.logOut()}" value="Logout" ajax="false"
+					immediate="true" />
 			</h:form>
 		</div>
 	</ui:composition>

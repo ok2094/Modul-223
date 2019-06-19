@@ -79,32 +79,32 @@ public class PersonBean extends AbstractBean implements Serializable {
 		}
 	}
 
-	public void addLanguageToPerson() {
-		try {
-			getPersonFacade().addLanguageToPerson(language.getId(), personWithLanguages.getId());
-			closeDialog();
-			displayInfoMessageToUser("Added with success");
-			reloadPersonWithLanguages();
-			resetLanguage();
-		} catch (Exception e) {
-			keepDialogOpen();
-			displayErrorMessageToUser("A problem occurred while saving. Try again later");
-			e.printStackTrace();
+	public Person getPerson() {
+		if (person == null) {
+			person = new Person();
 		}
+
+		return person;
 	}
 
-	public void removeLanguageFromPerson() {
-		try {
-			getPersonFacade().removeLanguageFromPerson(language.getId(), personWithLanguages.getId());
-			closeDialog();
-			displayInfoMessageToUser("Removed with success");
-			reloadPersonWithLanguages();
-			resetLanguage();
-		} catch (Exception e) {
-			keepDialogOpen();
-			displayErrorMessageToUser("A problem occurred while removing. Try again later");
-			e.printStackTrace();
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public List<Person> getAllPersons() {
+		if (persons == null) {
+			loadPersons();
 		}
+
+		return persons;
+	}
+
+	private void loadPersons() {
+		persons = getPersonFacade().listAll();
+	}
+
+	public void resetPerson() {
+		person = new Person();
 	}
 
 	public Person getPersonWithLanguages() {
@@ -133,20 +133,96 @@ public class PersonBean extends AbstractBean implements Serializable {
 		personWithLanguagesForDetail = new Person();
 	}
 
+	private void reloadPersonWithLanguages() {
+		personWithLanguages = getPersonFacade().findPersonWithAllLanguages(person.getId());
+	}
+
+	public PersonFacade getPersonFacade() {
+		if (personFacade == null) {
+			personFacade = new PersonFacade();
+		}
+
+		return personFacade;
+	}
+	
+	// Language stuff
+
+	public void setLanguageBean(LanguageBean languageBean) {
+		this.languageBean = languageBean;
+	}
+	
+	public void addLanguageToPerson() {
+		try {
+			getPersonFacade().addLanguageToPerson(language.getId(), personWithLanguages.getId());
+			closeDialog();
+			displayInfoMessageToUser("Added with success");
+			reloadPersonWithLanguages();
+			resetLanguage();
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("A problem occurred while saving. Try again later");
+			e.printStackTrace();
+		}
+	}
+
+	public void removeLanguageFromPerson() {
+		try {
+			getPersonFacade().removeLanguageFromPerson(language.getId(), personWithLanguages.getId());
+			closeDialog();
+			displayInfoMessageToUser("Removed with success");
+			reloadPersonWithLanguages();
+			resetLanguage();
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("A problem occurred while removing. Try again later");
+			e.printStackTrace();
+		}
+	}
+
 	public String editPersonLanguages() {
 		ELFlash.getFlash().put(SELECTED_PERSON, person);
 		return "/pages/public/person/personLanguages/personLanguages.xhtml";
+	}
+
+	public Language getLanguage() {
+		if (language == null) {
+			language = new Language();
+		}
+
+		return language;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
+
+	public void resetLanguage() {
+		language = new Language();
+	}
+		
+	public List<Language> getRemainingLanguages(String name) {
+		//get all languages as copy
+		List<Language> res = new ArrayList<Language>(this.languageBean.getAllLanguages());
+		//remove already added languages
+		res.removeAll(personWithLanguages.getLanguages());
+		//remove when name not occurs
+		res.removeIf(l -> l.getName().toLowerCase().contains(name.toLowerCase()) == false);
+		return res;
+	}
+
+	// City stuff
+
+	public void setCityBean(CityBean cityBean) {
+		this.cityBean = cityBean;
 	}
 	
 	public void setCityToPerson() {
 		try {
 			getPersonFacade().setCityToPerson(city.getId(), personWithLanguages.getId());
-			closeDialog();
-			displayInfoMessageToUser("Added with success");
+			displayInfoMessageToUser("Saved");
 			reloadPersonWithLanguages();
 			resetCity();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("A problem occurred while saving. Try again later");
 			e.printStackTrace();
 		}
@@ -171,76 +247,6 @@ public class PersonBean extends AbstractBean implements Serializable {
 		return "/pages/public/person/personCities/personCities.xhtml";
 	}
 
-	public PersonFacade getPersonFacade() {
-		if (personFacade == null) {
-			personFacade = new PersonFacade();
-		}
-
-		return personFacade;
-	}
-
-	public Person getPerson() {
-		if (person == null) {
-			person = new Person();
-		}
-
-		return person;
-	}
-
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-	
-	public void setLanguageBean(LanguageBean languageBean) {
-		this.languageBean = languageBean;
-	}
-	
-	public void setCityBean(CityBean cityBean) {
-		this.cityBean = cityBean;
-	}
-
-	public List<Person> getAllPersons() {
-		if (persons == null) {
-			loadPersons();
-		}
-
-		return persons;
-	}
-	
-	public List<Language> getRemainingLanguages(String name) {
-		//get all languages as copy
-		List<Language> res = new ArrayList<Language>(this.languageBean.getAllLanguages());
-		//remove already added languages
-		res.removeAll(personWithLanguages.getLanguages());
-		//remove when name not occurs
-		res.removeIf(l -> l.getName().toLowerCase().contains(name.toLowerCase()) == false);
-		return res;
-	}
-
-	private void loadPersons() {
-		persons = getPersonFacade().listAll();
-	}
-
-	public void resetPerson() {
-		person = new Person();
-	}
-
-	public Language getLanguage() {
-		if (language == null) {
-			language = new Language();
-		}
-
-		return language;
-	}
-
-	public void setLanguage(Language language) {
-		this.language = language;
-	}
-
-	public void resetLanguage() {
-		language = new Language();
-	}
-
 	public City getCity() {
 		if (city == null) {
 			if(personWithLanguages.getCity() != null) {
@@ -251,14 +257,6 @@ public class PersonBean extends AbstractBean implements Serializable {
 		}
 
 		return city;
-	}
-	
-	public List<City> getRemainingCities(String name) {
-		//get all languages as copy
-		List<City> res = new ArrayList<City>(this.cityBean.getAllCities());
-		//remove when name not occurs
-		res.removeIf(l -> l.getName().toLowerCase().contains(name.toLowerCase()) == false);
-		return res;
 	}
 	
 	public List<City> getAllCities() {
@@ -272,9 +270,12 @@ public class PersonBean extends AbstractBean implements Serializable {
 	public void resetCity() {
 		city = new City();
 	}
-
-	private void reloadPersonWithLanguages() {
-		personWithLanguages = getPersonFacade().findPersonWithAllLanguages(person.getId());
+	
+	public List<City> getRemainingCities(String name) {
+		//get all languages as copy
+		List<City> res = new ArrayList<City>(this.cityBean.getAllCities());
+		//remove when name not occurs
+		res.removeIf(l -> l.getName().toLowerCase().contains(name.toLowerCase()) == false);
+		return res;
 	}
-
 }

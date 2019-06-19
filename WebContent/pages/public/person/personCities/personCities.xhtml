@@ -12,7 +12,7 @@
 				<p:commandButton value="#{bundle.remove}" icon="pi pi-trash" actionListener="#{personBean.resetCity}" onclick="PF('personRemoveCityDialogWidget').show()" update=":personRemoveCityDialogForm" >
 					<f:setPropertyActionListener target="#{personBean.city}" value="#{city}" />
 				</p:commandButton>
-				<p:commandButton value="#{bundle.save}" action="#{personBean.setCityToPerson()}" />
+				<p:commandButton value="#{bundle.save}" action="#{personBean.setCityToPerson()}" update=":messageGrowl" />
 			</h:form>
 			<ui:include src="/pages/public/person/personCities/dialogs/personRemoveCityDialog.xhtml" />
 		</ui:define>

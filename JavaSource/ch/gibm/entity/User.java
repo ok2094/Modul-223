@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.Version;
 
 @Entity
 @NamedQuery(name = "User.findUserByNameAndPassword", query = "select u from User u where u.userName = :userName and u.password = :password")
@@ -22,6 +23,9 @@ public class User implements Serializable{
 	private int id;
 	private String userName;
 	private String password;
+	
+	@Version
+	private int version;
 	
 	@ManyToOne
 	@JoinColumn(name = "roleID")

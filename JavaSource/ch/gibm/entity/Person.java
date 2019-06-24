@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.Version;
 
 @Entity
 @NamedQuery(name = "Person.findPersonByIdWithLanguages", query = "select p from Person p left join fetch p.languages left join fetch p.city where p.id = :personId")
@@ -24,6 +25,9 @@ public class Person implements Serializable {
 	private int id;
 	private String name;
 	private String surname;
+	
+	@Version
+	private int version;
 
 	@ManyToMany
 	private List<Language> languages;

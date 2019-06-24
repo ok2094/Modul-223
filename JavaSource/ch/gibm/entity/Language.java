@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Version;
 
 @Entity
 public class Language implements Serializable{
@@ -17,6 +18,9 @@ public class Language implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
+	
+	@Version
+	private int version;
 
 	@ManyToMany(mappedBy="languages")
 	private List<Person> persons;

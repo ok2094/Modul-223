@@ -92,5 +92,5 @@ public class PersonFacade implements Serializable {
 		Person person = personDAO.find(personId);
 		person.setCity(null);
 		EntityManagerHelper.commitAndCloseTransaction();
-}
+	}
 }

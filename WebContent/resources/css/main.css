@@ -39,12 +39,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 #divLogin {
-	width: 300px;
-	height: 300px;
-	display: flex; 
-	align-items: center;
-	background: #f4f4f4;
-	border: 1px solid darkGray;
+	text-align: center;
 }
 
 #divTop {

@@ -31,6 +31,7 @@ public class UserBean extends AbstractBean implements Serializable {
 			getUserFacade().updateUser(user);
 			closeDialog();
 			displayInfoMessageToUser("Updated with success");
+			user = getUser();
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("A problem occurred while updating. Try again later");

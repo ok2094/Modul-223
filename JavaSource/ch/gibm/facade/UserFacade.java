@@ -11,9 +11,9 @@ public class UserFacade implements Serializable{
 	
 	private UserDAO userDAO = new UserDAO();
 	
-	public User isValidLogin(String userName, String password) {
+	public User isValidLogin(String username, String password) {
 		EntityManagerHelper.beginTransaction();
-		User validUser = userDAO.findUserByNameAndPassword(userName, password);
+		User validUser = userDAO.findUserByNameAndPassword(username, password);
 		EntityManagerHelper.commitAndCloseTransaction();
 		return validUser;
 	}

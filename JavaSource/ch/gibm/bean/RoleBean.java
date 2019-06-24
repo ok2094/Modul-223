@@ -35,7 +35,6 @@ public class RoleBean extends AbstractBean implements Serializable {
 
 	private void loadRoles() {
 		roles = getRoleFacade().listAll();
-		System.out.println(roles);
 	}
 
 	public void resetRole() {

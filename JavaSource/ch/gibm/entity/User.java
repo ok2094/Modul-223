@@ -9,10 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.Version;
 
 @Entity
-@NamedQuery(name = "User.findUserByNameAndPassword", query = "select u from User u where u.userName = :userName and u.password = :password")
+@NamedQuery(name = "User.findUserByNameAndPassword", query = "select u from User u where u.username = :username and u.password = :password")
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -21,11 +20,9 @@ public class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String userName;
+	private String username;
 	private String password;
-	
-	@Version
-	private int version;
+	private String message;
 	
 	@ManyToOne
 	@JoinColumn(name = "roleID")
@@ -39,12 +36,12 @@ public class User implements Serializable{
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -53,6 +50,14 @@ public class User implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	@Override
@@ -79,6 +84,6 @@ public class User implements Serializable{
 
 	@Override
 	public String toString() {
-		return userName;
+		return username;
 	}
 }

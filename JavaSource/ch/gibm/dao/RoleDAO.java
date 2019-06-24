@@ -1,6 +1,5 @@
 package ch.gibm.dao;
 
-import java.util.List;
 import ch.gibm.entity.Role;
 
 public class RoleDAO  extends GenericDAO<Role>{
@@ -11,12 +10,8 @@ public class RoleDAO  extends GenericDAO<Role>{
 		super(Role.class);
 	}
 
-	public List<Role> findAll() {
-		return super.findAll();
-	}
-
 	public void create (Role role) {
-        	super.save(role);
+        super.save(role);
 	}
 	
 	public Role findById(int roleId) {

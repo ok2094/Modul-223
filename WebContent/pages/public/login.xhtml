@@ -20,7 +20,7 @@
 				</h:inputSecret>
 				<br />
 				<p:commandButton action="#{loginBean.login()}" value="Login"
-					ajax="false" />
+					ajax="false" update=":messageGrowl" />
 			</h:form>
 		</ui:define>
 	</ui:composition>

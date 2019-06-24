@@ -8,14 +8,16 @@
 <h:body>
 	<ui:composition>
 		<div id="topMessage" style="">
-			<h:form>
+			<h:form id="topForm">
 				<h:commandLink
 					action="/pages/protected/index.xhtml?faces-redirect=true">
 					<h:graphicImage library="images" name="logo.png" />
 				</h:commandLink>
-			Welcome to JSF
-				<p:commandButton icon="pi pi-ban" rendered="true"
-					action="#{userBean.logOut()}" value="Logout" ajax="false"
+				Message:
+				<h:outputText id="messageOutput" value="#{userBean.user.message} " />
+				
+				<p:commandButton id="logoutButton" icon="pi pi-ban" rendered="true"
+					action="#{userBean.logOut()}" value="Logout: #{userBean.user.username}" ajax="false"
 					immediate="true" />
 			</h:form>
 		</div>

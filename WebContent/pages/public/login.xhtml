@@ -16,7 +16,7 @@
 				<label for="pwd">Password: </label>
 				<h:inputSecret value="#{loginBean.password}" label="Password"
 					id="pwd" required="true" autocomplete="off">
-					<f:validateLength minimum="4" />
+					<f:validateLength minimum="3" />
 				</h:inputSecret>
 				<br />
 				<p:commandButton action="#{loginBean.login()}" value="Login"

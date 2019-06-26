@@ -64,7 +64,7 @@ public class LoginFilter implements Filter {
 
 	protected void doLogin(ServletRequest request, ServletResponse response, HttpServletRequest req)
 			throws ServletException, IOException {
-
+		
 		RequestDispatcher rd = req.getRequestDispatcher("/pages/public/login.xhtml");
 		rd.forward(request, response);
 	}

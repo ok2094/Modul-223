@@ -12,7 +12,7 @@
 				<p:submenu label="Base data">
 					<p:menuitem value="#{bundle.admin}"
 						action="/pages/protected/admin/adminIndex.xhtml?faces-redirect=true"
-						update="messages" ajax="false" icon="pi pi-cog" />
+						update="messages" ajax="false" icon="pi pi-cog" rendered="#{userBean.isAdmin()}" />
 					<p:menuitem value="#{bundle.profile}"
 						action="/pages/protected/profile/profileIndex.xhtml?faces-redirect=true"
 						update="messages" ajax="false" icon="pi pi-user" />

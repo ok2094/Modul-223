@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
 	<ui:composition template="/pages/protected/templates/basic.xhtml">
-		<ui:define name="divLogin">
+		<ui:define name="divMain">
 			<h:form>
 				<h2>#{bundle.loginMessage}</h2>
 				<label for="user">Username: </label>
@@ -19,8 +19,7 @@
 					<f:validateLength minimum="3" />
 				</h:inputSecret>
 				<br />
-				<p:commandButton action="#{loginBean.login()}" value="Login"
-					ajax="false" update=":messageGrowl" />
+				<p:commandButton action="#{loginBean.login()}" value="Login" update=":messageGrowl" />
 			</h:form>
 		</ui:define>
 	</ui:composition>

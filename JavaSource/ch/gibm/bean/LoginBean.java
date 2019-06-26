@@ -20,21 +20,19 @@ public class LoginBean extends AbstractBean {
 	// login logic
 	public String login() { // 3
 		UserFacade userFacade = new UserFacade(); // 4
-		try {
-			User user = userFacade.isValidLogin(this.user, this.password); // 5
-			if (user != null) {
-				userBean.setUser(user); // 6
-				FacesContext context = FacesContext.getCurrentInstance();
-				HttpServletRequest request = (HttpServletRequest)
+		User user = userFacade.isValidLogin(this.user, this.password); // 5
+		if (user != null) {
+			userBean.setUser(user); // 6
+			FacesContext context = FacesContext.getCurrentInstance();
+			HttpServletRequest request = (HttpServletRequest)
 
-				context.getExternalContext().getRequest();
+			context.getExternalContext().getRequest();
 
-				request.getSession().setAttribute("user", user); // 7
-				return "/pages/protected/index.xhtml"; // 8
-			}
-		} catch (Exception e) {
-			displayErrorMessageToUser("Check username and/or password");
+			request.getSession().setAttribute("user", user); // 7
+			return "/pages/protected/index.xhtml"; // 8
 		}
+		displayErrorMessageToUser("Check username and/or password");
+
 		return null;
 	}
 
